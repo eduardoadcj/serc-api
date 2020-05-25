@@ -20,8 +20,12 @@ create table endereco (
     bairro varchar(255) not null,
     numero varchar(20) not null,
     cep char(8) not null,
-    id_cidade bigint not null
+    id_cidade bigint not null,
+    id_cliente bigint not null
 );
 
 alter table endereco add constraint fk_endereco_cidade
 foreign key (id_cidade) references cidade (id);
+
+alter table endereco add constraint fk_endereco_cliente
+foreign key (id_cliente) references cliente (id);
