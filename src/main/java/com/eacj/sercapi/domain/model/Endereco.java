@@ -38,10 +38,16 @@ public class Endereco {
     @Size(max = 8, min = 8)
     private String cep;
     
-    @Valid
-    @NotNull
-    @ManyToOne
-    private Cidade cidade;
+    @NotBlank
+    @Size(max = 255)
+    private String cidade;
+    
+    @NotBlank
+    @Size(max = 255)
+    private String estado;
+    
+    @Size(max = 2, min = 2)
+    private String estadoUf;
     
     @Valid
     @NotNull
@@ -96,12 +102,28 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public Cidade getCidade() {
+    public String getCidade() {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getEstadoUf() {
+        return estadoUf;
+    }
+
+    public void setEstadoUf(String estadoUf) {
+        this.estadoUf = estadoUf;
     }
 
     public Cliente getCliente() {
