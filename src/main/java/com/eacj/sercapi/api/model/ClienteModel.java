@@ -1,21 +1,13 @@
-package com.eacj.sercapi.domain.model;
 
+package com.eacj.sercapi.api.model;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-@Entity
-public class Cliente {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ClienteModel {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -25,14 +17,10 @@ public class Cliente {
     private String numeroCalcado;
     private String numeroJeans;
     private OffsetDateTime nascimento;
-  
-    @ManyToOne
-    private Usuario usuario;
     
     private OffsetDateTime dataRegistro;
     
-    @OneToMany(mappedBy = "cliente")
-    private List<Endereco> enderecos = new ArrayList<>();
+    private List<EnderecoModel> enderecoModels;
 
     public Long getId() {
         return id;
@@ -40,6 +28,14 @@ public class Cliente {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCpf() {
@@ -98,53 +94,12 @@ public class Cliente {
         this.dataRegistro = dataRegistro;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public List<EnderecoModel> getEnderecoModels() {
+        return enderecoModels;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Cliente other = (Cliente) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+    public void setEnderecoModels(List<EnderecoModel> enderecoModels) {
+        this.enderecoModels = enderecoModels;
     }
     
 }
