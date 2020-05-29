@@ -14,11 +14,11 @@ create table cliente (
     numero_jeans varchar(3),
     nascimento datetime,
     data_registro datetime not null,
-    id_usuario bigint not null
+    usuario_id bigint not null
 );
 
 alter table cliente add constraint fk_cliente_usuario
-foreign key (id_usuario) references usuario(id);
+foreign key (usuario_id) references usuario(id);
 
 create table endereco (
     id bigint not null auto_increment primary key,
@@ -30,8 +30,8 @@ create table endereco (
     cidade varchar(255) not null,
     estado varchar(255) not null,
     estado_uf char(2),
-    id_cliente bigint not null
+    cliente_id bigint not null
 );
 
 alter table endereco add constraint fk_endereco_cliente
-foreign key (id_cliente) references cliente (id);
+foreign key (cliente_id) references cliente (id);
