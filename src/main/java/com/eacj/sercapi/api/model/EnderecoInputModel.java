@@ -1,38 +1,48 @@
-package com.eacj.sercapi.domain.model;
 
-import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+package com.eacj.sercapi.api.model;
 
-@Entity
-public class Endereco {
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
+public class EnderecoInputModel {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
+    @NotBlank
+    @Size(max = 200)
     private String titulo;
+    
+    @NotBlank
+    @Size(max = 20)
     private String numero;
+    
+    @NotBlank
+    @Size(max = 255)
     private String rua;
+    
+    @NotBlank
+    @Size(max = 255)
     private String bairro;
+    
+    @NotBlank
+    @Size(max = 8, min = 8)
     private String cep;
+    
+    @NotBlank
+    @Size(max = 255)
     private String cidade;
+    
+    @NotBlank
+    @Size(max = 255)
     private String estado;
+    
+    @Size(max = 2, min = 2)
     private String estadoUf;
     
-    @ManyToOne
-    private Cliente cliente;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Valid
+    @NotNull
+    private ClienteIdInputModel cliente;
 
     public String getTitulo() {
         return titulo;
@@ -98,37 +108,12 @@ public class Endereco {
         this.estadoUf = estadoUf;
     }
 
-    public Cliente getCliente() {
+    public ClienteIdInputModel getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(ClienteIdInputModel cliente) {
         this.cliente = cliente;
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Endereco other = (Endereco) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
     }
     
 }
