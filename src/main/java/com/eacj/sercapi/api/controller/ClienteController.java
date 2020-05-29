@@ -45,17 +45,18 @@ public class ClienteController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @GetMapping("/all")
+    public List<ClienteModel> listar(){
+        return toCollectionModel(clienteRepository.findByUsuarioId(1l));
+    }
+    
     @GetMapping
     public ResponseEntity<List<ClienteModel>> listar(@RequestParam int page) {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         
         if (page < 0) {
-            List<Cliente> list = clienteRepository.findByUsuarioId(1l);
-            responseHeaders.add("X-Total-Count", String.valueOf(list.size()));
-            return ResponseEntity.ok()
-                    .headers(responseHeaders)
-                    .body(toCollectionModel(list));
+            return ResponseEntity.badRequest().build();
         }
 
         Pageable sortByName = PageRequest.of(page, DEFAULT_PAGE_SIZE, Sort.by("nome"));
