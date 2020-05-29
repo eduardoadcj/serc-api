@@ -2,6 +2,7 @@
 package com.eacj.sercapi.api.exceptionhandler;
 
 import com.eacj.sercapi.domain.exception.BusinessException;
+import com.eacj.sercapi.domain.exception.EntityNotFoundException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         
         return handleExceptionInternal(ex, error, new HttpHeaders(),
                 HttpStatus.BAD_REQUEST, request);
+        
+    }
+    
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex,
+            WebRequest request){
+        
+        Error error = new Error();
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setTitle(ex.getMessage());
+        error.setTime(OffsetDateTime.now());
+        
+        return handleExceptionInternal(ex, error, new HttpHeaders(),
+                HttpStatus.NOT_FOUND, request);
         
     }
 

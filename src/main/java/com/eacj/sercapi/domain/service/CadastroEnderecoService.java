@@ -2,7 +2,9 @@
 package com.eacj.sercapi.domain.service;
 
 import com.eacj.sercapi.domain.exception.BusinessException;
+import com.eacj.sercapi.domain.exception.EntityNotFoundException;
 import com.eacj.sercapi.domain.model.Endereco;
+import com.eacj.sercapi.domain.repository.ClienteRepository;
 import com.eacj.sercapi.domain.repository.EnderecoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,13 @@ public class CadastroEnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
     
+    @Autowired
+    private ClienteRepository clienteRepository;
+    
     public Endereco salvar(Endereco endereco){
+        
+        if(!clienteRepository.existsById(endereco.getCliente().getId()))
+            throw new EntityNotFoundException("Cliente não encontrado");
         
         List<Endereco> enderecos = enderecoRepository.findByClienteId(
                 endereco.getCliente().getId());
@@ -31,7 +39,12 @@ public class CadastroEnderecoService {
     }
     
     public Endereco alterar(Endereco endereco){
+    
+        if(!clienteRepository.existsById(endereco.getCliente().getId()))
+            throw new EntityNotFoundException("Cliente não encontrado");
+        
         return enderecoRepository.save(endereco);
+    
     }
     
     public void remover(Long id){
