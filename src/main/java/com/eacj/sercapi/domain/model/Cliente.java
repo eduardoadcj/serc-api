@@ -22,6 +22,10 @@ public class Cliente {
     private Long id;
     
     @NotBlank
+    @Size(max = 200)
+    private String nome;
+    
+    @NotBlank
     @Size(max = 11, min = 11)
     private String cpf;
     
@@ -116,6 +120,14 @@ public class Cliente {
         this.enderecos = enderecos;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
