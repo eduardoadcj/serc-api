@@ -6,6 +6,7 @@ import com.eacj.sercapi.domain.repository.ClienteRepository;
 import com.eacj.sercapi.domain.repository.EnderecoRepository;
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,8 @@ public class CadastroClienteService {
         cliente.setDataRegistro(oldCliente.getDataRegistro());
         return clienteRepository.save(cliente);
     }
-        
+    
+    @Transactional
     public void remover(Long id) {
         enderecoRepository.deleteByClienteId(id);
         clienteRepository.deleteById(id);
