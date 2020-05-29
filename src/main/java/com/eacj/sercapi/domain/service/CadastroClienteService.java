@@ -1,5 +1,6 @@
 package com.eacj.sercapi.domain.service;
 
+import com.eacj.sercapi.domain.exception.BusinessException;
 import com.eacj.sercapi.domain.model.Cliente;
 import com.eacj.sercapi.domain.repository.ClienteRepository;
 import com.eacj.sercapi.domain.repository.EnderecoRepository;
@@ -22,7 +23,7 @@ public class CadastroClienteService {
         Optional<Cliente> clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
 
         if (clienteExistente.isPresent()) 
-            throw new RuntimeException("Já existe um cliente com este CPF.");
+            throw new BusinessException("Já existe um cliente com este CPF");
 
         cliente.setDataRegistro(OffsetDateTime.now());
 
