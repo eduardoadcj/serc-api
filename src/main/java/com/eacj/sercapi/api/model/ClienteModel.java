@@ -20,7 +20,7 @@ public class ClienteModel {
     
     private OffsetDateTime dataRegistro;
     
-    private List<EnderecoModel> enderecoModels;
+    private List<EnderecoModel> enderecos;
 
     public Long getId() {
         return id;
@@ -94,12 +94,12 @@ public class ClienteModel {
         this.dataRegistro = dataRegistro;
     }
 
-    public List<EnderecoModel> getEnderecoModels() {
-        return enderecoModels;
+    public List<EnderecoModel> getEnderecos() {
+        return enderecos;
     }
 
-    public void setEnderecoModels(List<EnderecoModel> enderecoModels) {
-        this.enderecoModels = enderecoModels;
+    public void setEnderecos(List<EnderecoModel> enderecos) {
+        this.enderecos = enderecos;
     }
-    
+
 }
