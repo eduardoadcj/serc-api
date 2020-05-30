@@ -70,7 +70,7 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public ResponseEntity<ClienteModel> buscarPorId(@PathVariable Long id) {
         Optional<Cliente> opCliente = clienteRepository.findByIdAndUsuarioId(id, 1l);
         if (!opCliente.isPresent()) {
