@@ -69,8 +69,47 @@ public class ClienteController {
                 .body(toCollectionModel(pages.toList()));
 
     }
-
-    @GetMapping("/find/{id}")
+    
+    @GetMapping("/nome")
+    public List<ClienteModel> listarNome(@RequestParam String nome){
+        return toCollectionModel(
+                clienteRepository.findByUsuarioIdAndNomeContainingIgnoreCaseOrderByNomeAsc(
+                        1l, nome));
+    }
+    
+    @GetMapping("/numeroCalcado")
+    public List<ClienteModel> listarNumeroCalcado(@RequestParam String numeroCalcado){
+        return toCollectionModel(
+                clienteRepository.findByUsuarioIdAndNumeroCalcadoOrderByNomeAsc(
+                        1l, numeroCalcado));
+    }
+    
+    @GetMapping("/numeroJeans")
+    public List<ClienteModel> listarNumeroJeans(@RequestParam String numeroJeans){
+        return toCollectionModel(
+                clienteRepository.findByUsuarioIdAndNumeroJeansOrderByNomeAsc(
+                        1l, numeroJeans));
+    }
+    
+    @GetMapping("/numeroCalcado/numeroJeans")
+    public List<ClienteModel> listarNumeroCalcadoNumeroJeans(
+            @RequestParam String numeroCalcado,
+            @RequestParam String numeroJeans){
+        return toCollectionModel(
+                clienteRepository.findByUsuarioIdAndNumeroCalcadoAndNumeroJeansOrderByNomeAsc(
+                        1l, numeroCalcado, numeroJeans));
+    }
+    
+    @GetMapping("/numeroJeans/numeroCalcado")
+    public List<ClienteModel> listarNumeroJeansNumeroCalcado(
+            @RequestParam String numeroCalcado,
+            @RequestParam String numeroJeans){
+        return toCollectionModel(
+                clienteRepository.findByUsuarioIdAndNumeroCalcadoAndNumeroJeansOrderByNomeAsc(
+                        1l, numeroCalcado, numeroJeans));
+    }
+    
+    @GetMapping("/id/{id}")
     public ResponseEntity<ClienteModel> buscarPorId(@PathVariable Long id) {
         Optional<Cliente> opCliente = clienteRepository.findByIdAndUsuarioId(id, 1l);
         if (!opCliente.isPresent()) {

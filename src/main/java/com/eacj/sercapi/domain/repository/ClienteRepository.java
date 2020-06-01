@@ -16,6 +16,12 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
     Optional<Cliente> findByCpf(String cpf);
     List<Cliente> findByUsuarioId(Long id);
     Page<Cliente> findByUsuarioId(Long id, Pageable pageable);
+
+    List<Cliente> findByUsuarioIdAndNomeContainingIgnoreCaseOrderByNomeAsc(Long id, String nome);
+    List<Cliente> findByUsuarioIdAndNumeroCalcadoOrderByNomeAsc(Long id, String numeroCalcado);
+    List<Cliente> findByUsuarioIdAndNumeroJeansOrderByNomeAsc(Long id, String numeroJeans);
+    List<Cliente> findByUsuarioIdAndNumeroCalcadoAndNumeroJeansOrderByNomeAsc(Long id, String numeroCalcado, String numeroJeans);
+    
     Optional<Cliente> findByIdAndUsuarioId(Long id, Long uid);
     
 }
