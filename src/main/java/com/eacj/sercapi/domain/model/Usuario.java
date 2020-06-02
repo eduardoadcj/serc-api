@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Usuario {
@@ -16,24 +13,13 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @NotBlank
-    @Size(max = 20)
+
     private String uid;
-    
-    @NotBlank
-    @Size(max = 200)
     private String nome;
+    private String username;
+    private String password;
+    private String roles;
     
-    @NotBlank
-    @Size(max = 255)
-    private String senha;
-    
-    @NotBlank
-    @Size(max = 255)
-    private String regra;
-    
-    @NotNull
     private boolean enable;
 
     public Long getId() {
@@ -60,20 +46,28 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getUsername() {
+        return username;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getRegra() {
-        return regra;
+    public String getPassword() {
+        return password;
     }
 
-    public void setRegra(String regra) {
-        this.regra = regra;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public boolean isEnable() {
@@ -83,7 +77,7 @@ public class Usuario {
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
