@@ -1,7 +1,10 @@
 create table usuario (
     id bigint not null auto_increment primary key,
     uid varchar(20) not null,
-    nome varchar(200) not null
+    nome varchar(200) not null,
+    senha varchar(255) not null,
+    regra varchar(255) not null,
+    enable tinyint not null default 1
 );
 
 create table cliente (
