@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
     
     Optional<Cliente> findByCpf(String cpf);
+    Optional<Cliente> findByUsuarioIdAndCpf(Long id, String cpf);
     List<Cliente> findByUsuarioId(Long id);
     Page<Cliente> findByUsuarioId(Long id, Pageable pageable);
 

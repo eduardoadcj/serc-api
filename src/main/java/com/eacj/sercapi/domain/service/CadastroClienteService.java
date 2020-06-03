@@ -30,7 +30,9 @@ public class CadastroClienteService {
         if(!usuarioRepository.existsById(cliente.getUsuario().getId()))
             throw new EntityNotFoundException("Usuário não encontrado");
 
-        Optional<Cliente> clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
+        Optional<Cliente> clienteExistente = clienteRepository.findByUsuarioIdAndCpf(
+                cliente.getUsuario().getId(),
+                cliente.getCpf());
 
         if (clienteExistente.isPresent()) 
             throw new BusinessException("Já existe um cliente com este CPF");
