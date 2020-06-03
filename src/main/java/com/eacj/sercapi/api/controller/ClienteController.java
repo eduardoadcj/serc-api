@@ -2,6 +2,7 @@ package com.eacj.sercapi.api.controller;
 
 import com.eacj.sercapi.api.model.ClienteInputModel;
 import com.eacj.sercapi.api.model.ClienteModel;
+import com.eacj.sercapi.api.security.service.AuthenticatedUserService;
 import com.eacj.sercapi.domain.model.Cliente;
 import com.eacj.sercapi.domain.model.Usuario;
 import com.eacj.sercapi.domain.repository.ClienteRepository;
@@ -36,6 +37,7 @@ public class ClienteController {
 
     private final static int DEFAULT_PAGE_SIZE = 25;
 
+    
     @Autowired
     private ClienteRepository clienteRepository;
 
@@ -44,10 +46,16 @@ public class ClienteController {
 
     @Autowired
     private ModelMapper modelMapper;
+    
+    @Autowired
+    private AuthenticatedUserService authenticatedUserService;
 
+    
     @GetMapping("/all")
     public List<ClienteModel> listar(){
-        return toCollectionModel(clienteRepository.findByUsuarioId(1l));
+        List<Cliente> list = clienteRepository.findByUsuarioId(
+                authenticatedUserService.getAuthenticatedUsuario().getId());
+        return toCollectionModel(list);
     }
     
     @GetMapping
@@ -55,12 +63,13 @@ public class ClienteController {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         
-        if (page < 0) {
+        if (page < 0) 
             return ResponseEntity.badRequest().build();
-        }
-
+        
+        Usuario usuario = authenticatedUserService.getAuthenticatedUsuario();
+        
         Pageable sortByName = PageRequest.of(page, DEFAULT_PAGE_SIZE, Sort.by("nome"));
-        Page<Cliente> pages = clienteRepository.findByUsuarioId(1l, sortByName);
+        Page<Cliente> pages = clienteRepository.findByUsuarioId(usuario.getId(), sortByName);
 
         responseHeaders.add("X-Total-Count", String.valueOf(pages.getTotalElements()));
 
@@ -72,59 +81,79 @@ public class ClienteController {
     
     @GetMapping("/nome")
     public List<ClienteModel> listarNome(@RequestParam String nome){
-        return toCollectionModel(
-                clienteRepository.findByUsuarioIdAndNomeContainingIgnoreCaseOrderByNomeAsc(
-                        1l, nome));
+        
+        List<Cliente> list = clienteRepository
+                .findByUsuarioIdAndNomeContainingIgnoreCaseOrderByNomeAsc(
+                        authenticatedUserService.getAuthenticatedUsuario().getId(),
+                        nome);
+        
+        return toCollectionModel(list);
+        
     }
     
     @GetMapping("/numeroCalcado")
     public List<ClienteModel> listarNumeroCalcado(@RequestParam String numeroCalcado){
-        return toCollectionModel(
-                clienteRepository.findByUsuarioIdAndNumeroCalcadoOrderByNomeAsc(
-                        1l, numeroCalcado));
+        
+        List<Cliente> list = clienteRepository.findByUsuarioIdAndNumeroCalcadoOrderByNomeAsc(
+                        authenticatedUserService.getAuthenticatedUsuario().getId(), numeroCalcado);
+        
+        return toCollectionModel(list);
+        
     }
     
     @GetMapping("/numeroJeans")
     public List<ClienteModel> listarNumeroJeans(@RequestParam String numeroJeans){
-        return toCollectionModel(
-                clienteRepository.findByUsuarioIdAndNumeroJeansOrderByNomeAsc(
-                        1l, numeroJeans));
+        
+        List<Cliente> list = clienteRepository.findByUsuarioIdAndNumeroJeansOrderByNomeAsc(
+                        authenticatedUserService.getAuthenticatedUsuario().getId(), numeroJeans);
+        
+        return toCollectionModel(list);
+        
     }
     
     @GetMapping("/numeroCalcado/numeroJeans")
     public List<ClienteModel> listarNumeroCalcadoNumeroJeans(
             @RequestParam String numeroCalcado,
             @RequestParam String numeroJeans){
-        return toCollectionModel(
-                clienteRepository.findByUsuarioIdAndNumeroCalcadoAndNumeroJeansOrderByNomeAsc(
-                        1l, numeroCalcado, numeroJeans));
+        
+        List<Cliente> list = clienteRepository.findByUsuarioIdAndNumeroCalcadoAndNumeroJeansOrderByNomeAsc(
+                        authenticatedUserService.getAuthenticatedUsuario().getId(), numeroCalcado, numeroJeans);
+        
+        return toCollectionModel(list);
+        
     }
     
     @GetMapping("/numeroJeans/numeroCalcado")
     public List<ClienteModel> listarNumeroJeansNumeroCalcado(
             @RequestParam String numeroCalcado,
             @RequestParam String numeroJeans){
-        return toCollectionModel(
-                clienteRepository.findByUsuarioIdAndNumeroCalcadoAndNumeroJeansOrderByNomeAsc(
-                        1l, numeroCalcado, numeroJeans));
+        
+        List<Cliente> list = clienteRepository.findByUsuarioIdAndNumeroCalcadoAndNumeroJeansOrderByNomeAsc(
+                        authenticatedUserService.getAuthenticatedUsuario().getId(), numeroCalcado, numeroJeans);
+        
+        return toCollectionModel(list);
+        
     }
     
     @GetMapping("/id/{id}")
     public ResponseEntity<ClienteModel> buscarPorId(@PathVariable Long id) {
-        Optional<Cliente> opCliente = clienteRepository.findByIdAndUsuarioId(id, 1l);
-        if (!opCliente.isPresent()) {
+        
+        Usuario usuario = authenticatedUserService.getAuthenticatedUsuario();
+        Optional<Cliente> opCliente = clienteRepository.findByIdAndUsuarioId(id,
+                usuario.getId());
+        
+        if (!opCliente.isPresent()) 
             return ResponseEntity.notFound().build();
-        }
+        
         return ResponseEntity.ok(toModel(opCliente.get()));
+        
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ClienteModel salvar(@Valid @RequestBody ClienteInputModel clienteInputModel) {
         Cliente cliente = toEntity(clienteInputModel);
-        Usuario u = new Usuario();
-        u.setId(1l);
-        cliente.setUsuario(u);
+        cliente.setUsuario(authenticatedUserService.getAuthenticatedUsuario());
         return toModel(cadastroClienteService.salvar(cliente));
     }
 
@@ -138,9 +167,7 @@ public class ClienteController {
 
         Cliente cliente = toEntity(clienteInputModel);
         cliente.setId(id);
-        Usuario u = new Usuario();
-        u.setId(1l);
-        cliente.setUsuario(u);
+        cliente.setUsuario(authenticatedUserService.getAuthenticatedUsuario());
         cliente = cadastroClienteService.alterar(cliente);
 
         return ResponseEntity.ok(toModel(cliente));
@@ -149,15 +176,18 @@ public class ClienteController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Long id) {
-        if (!clienteRepository.existsById(id)) {
+        
+        if (!clienteRepository.existsById(id)) 
             return ResponseEntity.notFound().build();
-        }
-
+        
         cadastroClienteService.remover(id);
         return ResponseEntity.noContent().build();
 
     }
 
+    
+    //Entity parsers
+    
     private ClienteModel toModel(Cliente cliente) {
         return modelMapper.map(cliente, ClienteModel.class);
     }
