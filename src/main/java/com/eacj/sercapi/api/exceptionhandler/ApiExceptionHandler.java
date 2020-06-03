@@ -1,6 +1,7 @@
 
 package com.eacj.sercapi.api.exceptionhandler;
 
+import com.eacj.sercapi.api.exception.ApiException;
 import com.eacj.sercapi.domain.exception.BusinessException;
 import com.eacj.sercapi.domain.exception.EntityNotFoundException;
 import java.time.OffsetDateTime;
@@ -19,6 +20,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
+    
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<Object> handleApiException(ApiException ex,
+            WebRequest request){
+        
+        Error error = new Error();
+        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        error.setTitle(ex.getMessage());
+        error.setTime(OffsetDateTime.now());
+        
+        return handleExceptionInternal(ex, error, new HttpHeaders(),
+                HttpStatus.INTERNAL_SERVER_ERROR, request);
+        
+    }
     
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException ex,
