@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,11 +41,13 @@ public class UsuarioController {
     private PasswordEncoder passwordEncoder;
 
     
+    @Secured({"ROLE_ADMIN"})
     @GetMapping
     public List<UsuarioModel> listar(){
         return toCollectionModel(usuarioRepository.findAll());
     }
     
+    @Secured({"ROLE_ADMIN"})
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UsuarioModel salvar(@Valid @RequestBody UsuarioInputModel usuarioInputModel){
@@ -53,6 +56,7 @@ public class UsuarioController {
         return toModel(cadastroUsuarioService.salvar(usuario));
     }
     
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/desativar/id/{id}")
     public ResponseEntity<Void> desativarPorId(@PathVariable Long id){
         
@@ -64,6 +68,7 @@ public class UsuarioController {
         
     }
     
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/desativar/uid/{uid}")
     public ResponseEntity<Void> desativarPorId(@PathVariable String uid){
         
