@@ -23,17 +23,17 @@ public class CustomUserDetails implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority(this.usuario.getRegra()));
+        return Arrays.asList(new SimpleGrantedAuthority(this.usuario.getRoles()));
     }
 
     @Override
     public String getPassword() {
-        return this.usuario.getSenha();
+        return this.usuario.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.usuario.getUid();
+        return this.usuario.getUsername();
     }
 
     @Override
