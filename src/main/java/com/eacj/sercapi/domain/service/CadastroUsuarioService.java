@@ -23,6 +23,8 @@ public class CadastroUsuarioService {
         if(!usuarioRepository.findByUid(usuario.getUid()).isEmpty())
             throw new BusinessException("O uid informado  já esta sendo utilizado.");
         
+        usuario.setRoles("USER");
+        
         return usuarioRepository.save(usuario);
         
     }

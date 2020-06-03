@@ -20,7 +20,7 @@ public class Usuario {
     private String password;
     private String roles;
     
-    private boolean enable;
+    private boolean enable = true;
 
     public Long getId() {
         return id;
