@@ -16,6 +16,7 @@ public class EnderecoModel {
     private String cidade;
     private String estado;
     private String estadoUf;
+    private String complemento;
 
     public Long getId() {
         return id;
@@ -87,6 +88,14 @@ public class EnderecoModel {
 
     public void setEstadoUf(String estadoUf) {
         this.estadoUf = estadoUf;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
     
 }

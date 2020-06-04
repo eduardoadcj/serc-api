@@ -40,6 +40,9 @@ public class EnderecoInputModel {
     @Size(max = 2, min = 2)
     private String estadoUf;
     
+    @Size(max = 255)
+    private String complemento;
+    
     @Valid
     @NotNull
     private ClienteIdInputModel cliente;
@@ -114,6 +117,14 @@ public class EnderecoInputModel {
 
     public void setCliente(ClienteIdInputModel cliente) {
         this.cliente = cliente;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
     
 }

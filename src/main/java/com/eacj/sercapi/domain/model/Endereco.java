@@ -22,6 +22,7 @@ public class Endereco {
     private String cidade;
     private String estado;
     private String estadoUf;
+    private String complemento;
     
     @ManyToOne
     private Cliente cliente;
@@ -104,6 +105,14 @@ public class Endereco {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
     
     @Override
