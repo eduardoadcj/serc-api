@@ -34,11 +34,8 @@ public class EnderecoInputModel {
     private String cidade;
     
     @NotBlank
-    @Size(max = 255)
-    private String estado;
-    
     @Size(max = 2, min = 2)
-    private String estadoUf;
+    private String estado;
     
     @Size(max = 255)
     private String complemento;
@@ -101,14 +98,6 @@ public class EnderecoInputModel {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getEstadoUf() {
-        return estadoUf;
-    }
-
-    public void setEstadoUf(String estadoUf) {
-        this.estadoUf = estadoUf;
     }
 
     public ClienteIdInputModel getCliente() {

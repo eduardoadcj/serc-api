@@ -21,7 +21,6 @@ public class Endereco {
     private String cep;
     private String cidade;
     private String estado;
-    private String estadoUf;
     private String complemento;
     
     @ManyToOne
@@ -89,14 +88,6 @@ public class Endereco {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getEstadoUf() {
-        return estadoUf;
-    }
-
-    public void setEstadoUf(String estadoUf) {
-        this.estadoUf = estadoUf;
     }
 
     public Cliente getCliente() {

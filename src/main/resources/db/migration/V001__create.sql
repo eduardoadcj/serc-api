@@ -32,8 +32,7 @@ create table endereco (
     numero varchar(20) not null,
     cep char(8) not null,
     cidade varchar(255) not null,
-    estado varchar(255) not null,
-    estado_uf char(2),
+    estado char(2) not null,
     complemento varchar(255),
     cliente_id bigint not null
 );
