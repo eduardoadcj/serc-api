@@ -20,6 +20,7 @@ public class CorsConfig {
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+        config.addExposedHeader("X-Total-Count");
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
