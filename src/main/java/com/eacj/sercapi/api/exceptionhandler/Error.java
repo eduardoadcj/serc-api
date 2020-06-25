@@ -11,7 +11,8 @@ public class Error {
     
     private Integer status;
     private OffsetDateTime time;
-    private String title;
+    private String error;
+    private String errorDescription;
     private List<Field> fields; 
 
     public Integer getStatus() {
@@ -30,12 +31,20 @@ public class Error {
         this.time = time;
     }
 
-    public String getTitle() {
-        return title;
+    public String getError() {
+        return error;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
     }
 
     public List<Field> getFields() {

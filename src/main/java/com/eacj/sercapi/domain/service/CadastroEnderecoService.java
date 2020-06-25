@@ -30,7 +30,7 @@ public class CadastroEnderecoService {
         if(!enderecos.isEmpty()){
             for(Endereco e : enderecos){
                 if(e.getTitulo().equalsIgnoreCase(endereco.getTitulo()))
-                    throw new BusinessException("O cliente informado já possui um endereço com este titulo");
+                    throw new BusinessException("duplicated_endereco_titulo","O cliente informado já possui um endereço com este titulo");
             }
         }
         

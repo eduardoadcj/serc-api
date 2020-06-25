@@ -18,10 +18,10 @@ public class CadastroUsuarioService {
     public Usuario salvar(Usuario usuario){
         
         if(!usuarioRepository.findByUsername(usuario.getUsername()).isEmpty())
-            throw new BusinessException("O username informado já esta sendo utilizado.");
+            throw new BusinessException("username_already_used", "O username informado já esta sendo utilizado.");
         
         if(!usuarioRepository.findByUid(usuario.getUid()).isEmpty())
-            throw new BusinessException("O uid informado  já esta sendo utilizado.");
+            throw new BusinessException("uid_already_used", "O uid informado  já esta sendo utilizado.");
         
         usuario.setRoles("USER");
         

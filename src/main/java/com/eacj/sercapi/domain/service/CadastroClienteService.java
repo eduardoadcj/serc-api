@@ -35,7 +35,7 @@ public class CadastroClienteService {
                 cliente.getCpf());
 
         if (clienteExistente.isPresent()) 
-            throw new BusinessException("Já existe um cliente com este CPF");
+            throw new BusinessException("cpf_already_registered", "Já existe um cliente com este CPF");
 
         cliente.setDataRegistro(OffsetDateTime.now());
 

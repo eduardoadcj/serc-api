@@ -27,7 +27,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         
         Error error = new Error();
         error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        error.setTitle(ex.getMessage());
+        error.setError("api_error");
+        error.setErrorDescription(ex.getMessage());
         error.setTime(OffsetDateTime.now());
         
         return handleExceptionInternal(ex, error, new HttpHeaders(),
@@ -41,7 +42,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         
         Error error = new Error();
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setTitle(ex.getMessage());
+        error.setError(ex.getError());
+        error.setErrorDescription(ex.getMessage());
         error.setTime(OffsetDateTime.now());
         
         return handleExceptionInternal(ex, error, new HttpHeaders(),
@@ -55,7 +57,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         
         Error error = new Error();
         error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setTitle(ex.getMessage());
+        error.setError("entity_not_found");
+        error.setErrorDescription(ex.getMessage());
         error.setTime(OffsetDateTime.now());
         
         return handleExceptionInternal(ex, error, new HttpHeaders(),
@@ -77,7 +80,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
         
         Error error = new Error();
         error.setStatus(status.value());
-        error.setTitle("Um ou mais campos estão inválidos");
+        error.setError("validation_error");
+        error.setErrorDescription("Um ou mais campos estão inválidos");
         error.setTime(OffsetDateTime.now());
         error.setFields(fields);
         
